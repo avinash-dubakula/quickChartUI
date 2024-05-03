@@ -1,0 +1,28 @@
+.visible-date {
+    font-size: 10px;
+    font-weight: 600;
+    padding:2px 5px;
+    border-radius: 10px;
+    background-color: rgba(212, 208, 208, 0.959); /* Semi-transparent background */
+    
+  }
+  .visible-date-container{
+    display: flex;
+    justify-content: center;
+  }
+  .new-message-container {
+    width: 100%; 
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center; 
+    border-bottom: 1px solid rgba(49, 168, 223, 0.959);
+    color:  rgba(84, 68, 233, 0.959);  
+    line-height: 0.1em;
+   margin-top:10px;
+   margin-bottom: 10px;
+ } 
+ 
+ .new-message-container span { 
+     background:#fff; 
+     padding:0 10px; 
+ }

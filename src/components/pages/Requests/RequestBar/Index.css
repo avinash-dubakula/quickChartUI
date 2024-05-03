@@ -1,0 +1,58 @@
+.request-heading
+{
+    background-color: rgba(8, 8, 8, 0.897);
+    color: whitesmoke;
+    font-weight: 200;
+    font-size:22px;
+    line-height: 50px;
+    height: 10%;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.request-left-container{
+    width: 30%;
+    border-right: 1px solid rgba(27, 26, 26, 0.993);
+    border-left: 1px solid rgba(27, 26, 26, 0.993);
+    height: 100%;
+}
+.request-right-container{
+    width:70%;
+    height: 100%;
+}
+.profile-initials-2 {
+    width: 40px; /* Adjust based on your design */
+    height: 40px; /* Adjust based on your design */
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: #ccc; /* For initials background */
+  }
+  .requests-container{
+    height: 90%;
+    overflow-y: auto;
+  }
+  .requests-container::-webkit-scrollbar {
+    width: 4px; /* Make scrollbar thinner */
+     /* For horizontal scroll */
+  }
+  
+  /* Handle */
+  .requests-container::-webkit-scrollbar-thumb {
+    background: #8888887c; 
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  .requests-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  
+  /* Scrollbar track */
+  .requests-container::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 4px;
+  }
+  

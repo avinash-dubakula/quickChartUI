@@ -1,0 +1,80 @@
+.chat-card {
+    padding: 5px 10px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .msglist-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+  }
+  
+  .chat-info {
+    margin-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .chat-message {
+    font-weight: 400;
+    width:80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px; /* Ensures spacing between the message and the date */
+  }
+  
+    
+  
+  .chat-date {
+    white-space: nowrap;
+  }
+  
+  .unread-count {
+    min-width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+  .friend-name-display{
+    font-weight: 400;
+    font-size: 22px;
+    width:80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }
+  .profile-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .profile-photo, .profile-initials {
+    width: 40px; /* Adjust based on your design */
+    height: 40px; /* Adjust based on your design */
+    border-radius: 50%;
+    object-fit: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: #ccc; /* For initials background */
+  }
+  .online-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px; /* Adjust based on your design */
+    height: 10px; /* Adjust based on your design */
+    border-radius: 50%;
+    background-color: green;
+    border: 2px solid white; /* To distinguish from the profile background */
+  }

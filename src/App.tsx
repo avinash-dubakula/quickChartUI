@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
 import './App.css';
-
+import './assets/styles/bootstrap.css'
+import 'react-toastify/dist/ReactToastify.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import AuthContextProvider from './contexts/AuthContextProvider';
+import Login from './components/pages/Authorize/Login/Index';
+import NoChatSelected from './components/molecules/NoChatSelected/Index';
+import Home from './components/pages/Home/Index';
+import Chat from './components/pages/Chats/Chat/Index';
+import ChatBar from './components/pages/Chats/ChatBar/Index';
+import SpamBar from './components/pages/Spams/SpamBar/Index';
+import Spam from './components/pages/Spams/Spam/Index';
+import RequestBar from './components/pages/Requests/RequestBar/Index';
+import Blank from './components/molecules/Blank/Index';
+import ProfileCard from './components/organisms/ProfileCard/Index';
+import { IMessageData, MessageStatus } from './types/AppData/Message/Types';
+import AppDataContextProvider from './contexts/AppDataContextProvider';
+import ChatWrapper from './components/molecules/ChatWrapper/Index';
+import AppRoutes from './AppRoutes';
+import SignalRContextProvider from './contexts/SignalRContextProvider';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <BrowserRouter>
+    <AuthContextProvider>
+      <AppDataContextProvider>
+        <SignalRContextProvider>
+        <AppRoutes/>
+        </SignalRContextProvider>   
+      </AppDataContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
+    </>
   );
 }
 

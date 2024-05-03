@@ -1,0 +1,11 @@
+.no-chat-container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.no-chat-container h3,h1{
+    font-weight: 300;
+}

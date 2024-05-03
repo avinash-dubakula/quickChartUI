@@ -1,0 +1,50 @@
+.chat-heading
+{
+    background-color: rgba(8, 8, 8, 0.897);
+    color: whitesmoke;
+    font-weight: 200;
+    font-size:24px;
+    line-height: 50px;
+    height: 10%;    
+    padding-left: 20px;
+    padding-top: 10px;
+}
+.chat-left-container{
+    width: 30%;
+    border-right: 1px solid rgba(27, 26, 26, 0.993);
+    border-left: 1px solid rgba(27, 26, 26, 0.993);
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: rgba(128, 128, 128, 0.027);
+}
+.chat-right-container{
+    width:70%;
+    height: 100%;
+}
+.message-list-container{
+    overflow-y: auto;
+    height:90%;
+}
+.message-list-container::-webkit-scrollbar {
+    width: 4px; /* Make scrollbar thinner */
+     /* For horizontal scroll */
+  }
+  
+  /* Handle */
+  .message-list-container::-webkit-scrollbar-thumb {
+    background: #8888887c; 
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  .message-list-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  
+  /* Scrollbar track */
+  .message-list-container::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 4px;
+  }
+  
