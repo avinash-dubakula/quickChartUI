@@ -1,22 +1,25 @@
 import React from 'react'
-import { IChat } from '../../types/AppData/Message/Types';
+import { IMessagesSeenModel } from '../../types/AppData/Message/Types';
 
-export const FecthChats = async <T,>(bearerToken: string,isSpam:boolean,minimumMessagesRequested:number):Promise<T|null> => {  
+const PutSeenAck = async<T,>(bearerToken: string,model:IMessagesSeenModel) => {
     try 
     {
-        const response = await fetch(`api/Message/Chats/${isSpam}/${minimumMessagesRequested}`, 
+        const response = await fetch(`api/Message/SeenAck`, 
         {
-          method: "GET",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
             'Authorization': `Bearer ${bearerToken}`
-          },
+          },  
+          body:JSON.stringify(model)
         });
- 
+    
+        
+    
         if (response.ok) 
         {
-            console.log('Successfully loaded the latest Chats')
+            console.log(`Successfully send Message Delivered Ack`)
             
             const data:T = await response.json() as T; // Make sure to await the parsing of the JSON
             console.log('data',data)
@@ -24,15 +27,16 @@ export const FecthChats = async <T,>(bearerToken: string,isSpam:boolean,minimumM
         } 
         else 
         {
-            console.log("Unable to Load the Latest Chats")
+            console.log("Unable to Send Message Delivered Ack")
             return null;
         }
     } 
     catch (error) 
     {
-        console.log('Something Went Wrong while fetching the latest chats');
+        console.log('Something Went Wrong while Sending Message Delivered Ack');
         //console.error(error);
         return null;
     }
 }
 
+export default PutSeenAck

@@ -8,7 +8,6 @@ import { HubConnection } from '@microsoft/signalr';
 
 const UseSignalRSignals = (hubConnection: HubConnection | undefined, isStart: boolean) => {
     const {Data:appData,dispatch:appDispatch}=useContext(AppDataContext);
-    console.warn('testing',appData)
     const {AuthData:authData}=useContext(AuthContext)
     useEffect(() => { 
         if (hubConnection && isStart && appData) { 

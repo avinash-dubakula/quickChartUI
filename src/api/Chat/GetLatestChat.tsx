@@ -5,7 +5,7 @@ const GetLatestChat  =async (bearerToken: string,friendUserName:string,latestMes
     
     try 
     {
-        const response = await fetch(`https://localhost:7058/api/Message/Chat/Latest/${friendUserName}/${latestMessageId}`, 
+        const response = await fetch(`api/Message/Chat/Latest/${friendUserName}/${latestMessageId}`, 
         {
           method: "GET",
           headers: {

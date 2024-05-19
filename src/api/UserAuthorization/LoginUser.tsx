@@ -7,7 +7,7 @@ const LoginUser =async (loginModal:LoginModal):Promise<AuthenticationData | null
 
     try 
     {
-        const response = await fetch('https://localhost:7058/api/Authentication/Login', 
+        const response = await fetch('api/Authentication/Login', 
         {
           method: "POST",
           headers: {

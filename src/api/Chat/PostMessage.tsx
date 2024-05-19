@@ -3,7 +3,7 @@ const PostMessage  =async<T,> (bearerToken: string,messageModal:IMessageModel):P
     
     try 
     {
-        const response = await fetch(`https://localhost:7058/api/Message`, 
+        const response = await fetch(`api/Message`, 
         {
           method: "POST",
           headers: {

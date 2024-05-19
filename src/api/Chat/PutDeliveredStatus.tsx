@@ -3,7 +3,7 @@ const PutDeliveredStatus  =async<T,> (bearerToken: string,messageUpdateModel:IMe
     
     try 
     {
-        const response = await fetch(`https://localhost:7058/api/Message/updateMessage`, 
+        const response = await fetch(`api/Message/updateMessage`, 
         {
           method: "PUT",
           headers: {

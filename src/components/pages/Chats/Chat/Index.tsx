@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import './Index.css'
-import { IChat, IMessageBatch, IMessageData, IMessageResponse, MessageStatus } from '../../../../types/AppData/Message/Types';
+import { IChat, IMessageBatch, IMessageData, IMessageResponse, IMessagesSeenModel, MessageStatus } from '../../../../types/AppData/Message/Types';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import { AppDataContext } from '../../../../contexts/AppDataContextProvider';
@@ -9,11 +9,13 @@ import {GetChat } from '../../../../contexts/AppDataLogic';
 import { SendMessage, addEmoji, closeChatHandler, deleteChatHandler, formatDate, handleClickOutside, handleKeyDown, onScroll, scrollToBottom } from './Logic';
 import MessageList from '../../../molecules/MessageList/Index';
 import ChatHeader from '../../../molecules/ChatHeader/Index';
-import { InitialAppDataActionType } from '../../../../types/AppData/Context/Types';
+import { IChatData, InitialAppDataActionType } from '../../../../types/AppData/Context/Types';
 import { SignalRContext } from '../../../../contexts/SignalRContextProvider';
+import PutSeenAck from '../../../../api/Chat/PutSeenAck';
 const Chat: React.FC = () => {
   console.log('Inside Chat Component')
   const {Data:AppData,dispatch:appDispatch} = useContext(AppDataContext);
+  const [seenAckId, setSeenAckId] = useState<number>(-1);
   const {AuthData}=useContext(AuthContext);
   const {Data:signalRData}=useContext(SignalRContext);
   const [message, setMessage] = useState<string>('');
@@ -27,14 +29,33 @@ const Chat: React.FC = () => {
   var userMessages:IMessageBatch[]| null=null;
   var isUserActive:boolean=false;
   var userChat:IChat|null=null;
-  var t=AuthData;
   var newMessageStart:number|null=null
- 
-  if(AppData!=null && AppData.chats!=null && AppData.activeChatUserName!=null)
+  const sendSeenAck=async (latestMId:number)=>{   
+    if(chat!=null && AuthData.userAuthenticationData!=null && AppData.activeChatUserName!=null && AuthData.userAuthenticationData.userName!=AppData.activeChatUserName)
+      {
+        console.warn(`In UseEffect ${latestMId} ${chat.seenTillMessageId} ${seenAckId}`)
+        var latestMessageId=chat.chat.lastMessageId
+        if((chat.seenTillMessageId==null || chat.seenTillMessageId<latestMessageId) && seenAckId!=latestMessageId)
+          {
+    
+            var seenModel:IMessagesSeenModel={FriendUserName:AppData.activeChatUserName,SeenTillMessageId:latestMessageId}
+            var res=await PutSeenAck<Boolean>(AuthData.userAuthenticationData.token,seenModel);  
+            if(res==true)
+              {
+                setSeenAckId(latestMessageId);
+                appDispatch({...InitialAppDataActionType,type:"SentSeenAck",currentChatUserName:AppData.activeChatUserName,seenAckId:latestMessageId})
+              }
+          }
+      }
+  }
+  
+  var chat:IChatData | null=null;
+  if(AppData.chats!=null && AppData.activeChatUserName!=null)
     {
-      var chat=GetChat(AppData.chats,AppData.activeChatUserName);
+      chat=GetChat(AppData.chats,AppData.activeChatUserName);
       if(chat!=null)
         {
+          
           userMessages=chat.messageBatches;
           userChat=chat.chat;
           var n=chat.newMessageIds.length;
@@ -48,6 +69,19 @@ const Chat: React.FC = () => {
             }
         }
     }
+  var latestMId:number=-1
+  if(userChat!=undefined)
+    {
+     latestMId=userChat?.lastMessageId
+    }
+  useEffect(() => {
+    
+    if(chat!=undefined && latestMId!=-1)
+      {
+        sendSeenAck(latestMId);
+      }
+    
+  }, [latestMId])
     const SendMessageAddParam=(): void=> {
       SendMessage(userChat,AuthData,AppData,sending,message,setsending,setMessage,appDispatch);
     }
@@ -110,7 +144,7 @@ const Chat: React.FC = () => {
       <span className="icon-button">📎</span> {/* File Attachment Icon */}
       <span className="icon-button">📷</span> {/* Camera Icon */}
       </div>
-      <span className="icon-button" onClick={e=>SendMessageAddParam}>➤</span> {/* Send Message Icon */}
+      <span className="icon-button" onClick={e=>SendMessageAddParam()}>➤</span> {/* Send Message Icon */}
       
       <span className="icon-button">🎤</span> {/* Microphone Icon */}
     </div>

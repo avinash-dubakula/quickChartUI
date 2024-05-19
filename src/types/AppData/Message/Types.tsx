@@ -1,3 +1,5 @@
+import { Interface } from "readline";
+
 export interface IChat {
     friendName: string;
     lastMessage: string;
@@ -43,4 +45,9 @@ export interface IMessagesUpdateModel{
   dbFetchedTime:Date,
   deliveredTime:Date
   newStatus:MessageStatus
+  lastSeenMessageID:number
+}
+export interface IMessagesSeenModel{
+  FriendUserName:string
+  SeenTillMessageId:number
 }

@@ -26,10 +26,6 @@ export const SentMessageAction = (messageResponse: IMessageResponse, oldState: I
       if (newState.chats != null && newState.chats.chatData != null) {
         console.log('new State');
         currentChat.chat.lastMessageDate = messageResponse.message.actionAt;
-        if(messageResponse.message.id>currentChat.chat.lastMessageId)
-          {
-            currentChat.chat.lastMessageId=messageResponse.message.id
-          }
         currentChat.chat.lastMessage = messageResponse.message.message;
         newState.chats.chatData[currentChatindex] = currentChat;
         return newState;
@@ -40,7 +36,7 @@ export const SentMessageAction = (messageResponse: IMessageResponse, oldState: I
   return oldState;
 
 };
-export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState: IAppData):IAppData => {
+export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState: IAppData,updateStatus: MessageStatus):IAppData => {
   if (oldState.chats != null && oldState.chats.chatData != null) {
     var currentChatindex = oldState.chats.chatData.findIndex(item => item.chat.friendUserName == messageResponse.friendUserName);
     console.log('chat found', currentChatindex);
@@ -65,6 +61,14 @@ export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState
         console.log('new State');
         currentChat.chat.lastMessage=messageResponse.message.message;
         currentChat.chat.lastMessageDate=messageResponse.message.actionAt;
+        if(updateStatus==MessageStatus.Seen)
+          {
+            console.error('update Status'+updateStatus);
+            currentChat.seenTillMessageId=Math.max(currentChat.seenTillMessageId??-1,messageResponse.message.id);
+          }
+        else{
+          currentChat.chat.unreadMessageCount=currentChat.chat.unreadMessageCount+1
+        }
         if(messageResponse.message.id>currentChat.chat.lastMessageId)
           {
             currentChat.chat.lastMessageId=messageResponse.message.id
@@ -133,14 +137,14 @@ export const MessagesUpdateAction = (messageModal: IMessagesUpdateModel, oldStat
           .forEach(msgBatch=>msgBatch.messages
             .forEach(msg=>
             {
-              if(!msg.isIncoming && msg.messageStatus==MessageStatus.Sent && messageModal.newStatus==MessageStatus.Delivered && new Date(msg.actionAt)<=messageModal.dbFetchedTime)
+              if(!msg.isIncoming && msg.messageStatus==MessageStatus.Sent && messageModal.newStatus==MessageStatus.Delivered && new Date(msg.actionAt)<=new Date(messageModal.dbFetchedTime))
                 {
                   msg.messageStatus=MessageStatus.Delivered;
                   isUpdateRequired=true
                 }
-                else if(!msg.isIncoming && msg.messageStatus==MessageStatus.Delivered || msg.messageStatus==MessageStatus.Sent)
+                else if(!msg.isIncoming && (msg.messageStatus==MessageStatus.Delivered || msg.messageStatus==MessageStatus.Sent) && messageModal.newStatus==MessageStatus.Seen && msg.id<=messageModal.lastSeenMessageID)
                   {
-                    msg.messageStatus=MessageStatus.Delivered;
+                    msg.messageStatus=MessageStatus.Seen;
                     isUpdateRequired=true;
                   }
             }

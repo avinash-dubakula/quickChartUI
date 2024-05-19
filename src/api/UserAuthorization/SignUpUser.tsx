@@ -7,7 +7,7 @@ const SignUpUser =async (signupModal:SignupModal):Promise<SignUpResult | null > 
 
     try 
     {
-        const response = await fetch('https://localhost:7058/api/Authentication/Register', 
+        const response = await fetch('api/Authentication/Register', 
         {
           method: "POST",
           headers: {

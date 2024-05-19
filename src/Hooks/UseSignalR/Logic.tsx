@@ -17,19 +17,33 @@ export class CustomRetryPolicy implements IRetryPolicy {
         return null; // stop retrying after max attempts
     }
 }
-export const SendMessageRecievedAck = async (messageResponse: IMessageResponse, Data: IAppData | null, token: string) => {
+export const SendMessageRecievedAck = async (messageResponse: IMessageResponse, Data: IAppData | null, token: string):Promise<MessageStatus|null> => {
     console.warn('trying to send recieved ACk',Data)
-    if (Data != null) {
+    if (Data != null) 
+    {
         var activeChatUserName = GetActiveChatUserName(Data);
-        if (messageResponse.friendUserName == activeChatUserName) {
+        if (messageResponse.friendUserName == activeChatUserName) 
+        {
+            console.log('Recieved a message that belongs to currently opened chat')
             var deliveryResult = await PutDeliveredStatus<boolean>(token ?? "", { friendUserName: messageResponse.friendUserName, messageId: messageResponse.message.id, newMessageStatus: MessageStatus.Seen });
+            if(deliveryResult!=null)
+                {
+                    return MessageStatus.Seen;
+                }
             console.log(messageResponse, deliveryResult);
         }
-        else {
+        else 
+        {
+            console.log('Recieved a message that belongs to other chat')
             var seenResult = await PutDeliveredStatus<boolean>(token ?? "", { friendUserName: messageResponse.friendUserName, messageId: messageResponse.message.id, newMessageStatus: MessageStatus.Delivered });
+            if(seenResult!=null)
+                {
+                    return MessageStatus.Delivered
+                }
             console.log(messageResponse, seenResult);
         }
     }
+    return null
 };export const CreateConnection = (hubUrl: string): HubConnection => {
     const connection = new HubConnectionBuilder()
         .withUrl(hubUrl)

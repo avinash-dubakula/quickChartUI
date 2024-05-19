@@ -3,7 +3,7 @@ import React from 'react'
 const PutDelieveredAck = async<T,>(bearerToken: string,latestfetchedDate:string) => {
     try 
     {
-        const response = await fetch(`https://localhost:7058/api/Message/RecievedAck/${latestfetchedDate}`, 
+        const response = await fetch(`api/Message/RecievedAck/${latestfetchedDate}`, 
         {
           method: "PUT",
           headers: {

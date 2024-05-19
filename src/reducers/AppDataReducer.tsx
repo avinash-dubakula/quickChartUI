@@ -29,7 +29,7 @@ const AppDataReducer = (oldState:IAppData,action:AppDataActionType):IAppData => 
                       chatTobeUpdated.newMessageIds=[]
                       return{...newState,activeChatUserName:action.currentChatUserName};
                     }
-                }
+                } 
               
               return {...oldState,activeChatUserName:action.currentChatUserName}
             }
@@ -42,9 +42,9 @@ const AppDataReducer = (oldState:IAppData,action:AppDataActionType):IAppData => 
               }
             return oldState
         case "RecievedMessage":
-          if(action.messageResponse!=null )
+          if(action.messageResponse!=null && action.updateStatus)
             {
-              var resultState=RecieveMessageAction(action.messageResponse,oldState);
+              var resultState=RecieveMessageAction(action.messageResponse,oldState,action.updateStatus);
               return resultState;       
             }
           return oldState
@@ -62,6 +62,19 @@ const AppDataReducer = (oldState:IAppData,action:AppDataActionType):IAppData => 
                 return resultState
             }
             return oldState
+        case "SentSeenAck":
+          if(action.currentChatUserName!=null )
+            {
+              var newState={...oldState};
+              var temp=newState.chats?.chatData.find(item=>item.chat.friendUserName==action.currentChatUserName)
+              if(temp!=undefined && action.seenAckId!=null)
+                {
+                  temp.seenTillMessageId=action.seenAckId;
+                  temp.chat.unreadMessageCount=0;
+                  return newState;
+                }
+            }
+          return oldState
         case "DeliveryStatusSent":
           var resultState=DeliveryStatusSentAction(oldState);
           return resultState

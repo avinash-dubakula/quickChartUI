@@ -1,7 +1,8 @@
 import React from 'react'
 import './Index.css'
 import { Outlet } from 'react-router-dom'
-import { FriendRequestData } from '../../../../types/AppData/FriendRequest/Types';
+import { FriendRequestData } from '../../../../types/Friends/EntityTypes';
+
 const RequestBar = () => {
   const friendRequests:FriendRequestData[] = [
     {
@@ -9,145 +10,34 @@ const RequestBar = () => {
       senderUserName: "john.doe",
       friendUserId: "user123",
       sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
       profileUrl: "",
+      commonFriendsCount: 0
     },
     {
       senderName: "Jane Smith",
       senderUserName: "jane.smith",
       friendUserId: "user456",
       sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
       profileUrl: null,
+      commonFriendsCount: 0
     },
     {
       senderName: "Alex Johnson",
       senderUserName: "alex.johnson",
       friendUserId: "user789",
       sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
       profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
+      commonFriendsCount: 0
     },
     {
       senderName: "John Doe",
       senderUserName: "john.doe",
       friendUserId: "user123",
       sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
       profileUrl: "",
+      commonFriendsCount: 0
     },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
-      profileUrl: null,
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
-      profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
-    },
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
-      profileUrl: "",
-    },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
-      profileUrl: null,
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
-      profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
-    },
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
-      profileUrl: "",
-    },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
-      profileUrl: null,
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
-      profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
-    },
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
-      profileUrl: "",
-    },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
-      profileUrl: null,
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
-      profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
-    },
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      commonFriendsCount: 5,
-      profileUrl: "",
-    },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      commonFriendsCount: 2,
-      profileUrl: null,
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      commonFriendsCount: 8,
-      profileUrl: "https://via.placeholder.com/150/FFF000/000000?Text=AlexJohnson",
-    }
+    
   ];
   
   return (
@@ -172,7 +62,6 @@ const RequestBar = () => {
             <h6 className='m-0 p-0'><small className='text-secondary'>{request.sentAt.toLocaleDateString()}</small></h6>
             </div>
             <div className='d-flex justify-content-between align-items-center'>
-            <h6 className='m-0 p-0'><small className='text-secondary'> {request.commonFriendsCount} common friends</small></h6>
             <div>
             <button type='button' className="btn btn-success btn-sm mr-3">Accept</button>
             <button type='button' className="btn btn-danger btn-sm">Decline</button>

@@ -140,7 +140,7 @@ const LoginOrSignUp: React.FC<LoginProps> = ({action})  => {
           </div>
           <div className="signup-form">
             <div className="title">Signup</div>
-            <form onSubmit={Loginhandle}>
+            <form onSubmit={SignUpHandle}>
               <div className="input-boxes">
                 <div className="d-flex bg-black"> 
                 <div className="input-box input-box2">

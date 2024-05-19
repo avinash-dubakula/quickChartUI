@@ -34,7 +34,7 @@ const AppRoutes = () => {
           {
             //inital dbFetch
             console.log('initial db fetch')
-            var loadResult= await InitalLoadChats(AuthData.userAuthenticationData.token,false,100,appDispatch,signalRDispatch);
+            var loadResult= await InitalLoadChats(AuthData.userAuthenticationData.token,false,50,appDispatch,signalRDispatch);
              if(loadResult)
               {
                 setIsDeliveryAckSent(!isDeliveryAckSent);
@@ -121,6 +121,10 @@ const AppRoutes = () => {
             <Route path=':name' element={<Spam></Spam>}> </Route>
           </Route>
           <Route path='friendRequest' element={<RequestBar/>}>
+            <Route index element={<Blank />}></Route>
+            <Route path='profile/:name' element={<ProfileCard></ProfileCard>}> </Route>
+          </Route>
+          <Route path='Friends' element={<RequestBar/>}>
             <Route index element={<Blank />}></Route>
             <Route path='profile/:name' element={<ProfileCard></ProfileCard>}> </Route>
           </Route>

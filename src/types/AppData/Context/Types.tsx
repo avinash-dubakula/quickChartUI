@@ -1,5 +1,5 @@
 import { AuthActionType } from "../../Authorization/ContextTypes"
-import { IChat, IMessageBatch, IMessageData, IMessageResponse, IMessagesUpdateModel } from "../Message/Types"
+import { IChat, IMessageBatch, IMessageData, IMessageResponse, IMessagesUpdateModel, MessageStatus } from "../Message/Types"
 export interface IChatData{
     chat:IChat
     messageBatches:IMessageBatch[]
@@ -34,7 +34,8 @@ export interface AppDataActionType{
     // Chats:IChat[]|null
      currentChatUserName:string|null
      messagesUpdate:IMessagesUpdateModel|null
-    
+     seenAckId:number|null
+    updateStatus:MessageStatus|null
     // latestMessageId:number|null
 }
 export const InitialAppDataActionType:AppDataActionType={
@@ -42,5 +43,7 @@ export const InitialAppDataActionType:AppDataActionType={
     initialChatData: null,
     currentChatUserName: null,
     messageResponse: null,
-    messagesUpdate: null
+    messagesUpdate: null,
+    seenAckId: null,
+    updateStatus: null
 }

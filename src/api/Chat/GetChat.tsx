@@ -5,7 +5,7 @@ const GetChat  =async (bearerToken: string,friendUserName:string):Promise<IMessa
     
     try 
     {
-        const response = await fetch(`https://localhost:7058/api/Message/Chat/${friendUserName}`, 
+        const response = await fetch(`api/Message/Chat/${friendUserName}`, 
         {
           method: "GET",
           headers: {

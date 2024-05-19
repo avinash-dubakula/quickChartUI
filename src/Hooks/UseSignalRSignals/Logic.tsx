@@ -3,11 +3,13 @@ import { IMessageResponse, IMessagesUpdateModel } from "../../types/AppData/Mess
 import { SendMessageRecievedAck } from "../UseSignalR/Logic";
 
 
-export const recievedMessage = (messageResponse: IMessageResponse, appDispatch: React.Dispatch<AppDataActionType>, Data: IAppData, token: string) => {
+export const recievedMessage = async (messageResponse: IMessageResponse, appDispatch: React.Dispatch<AppDataActionType>, Data: IAppData, token: string) => {
     console.log('recieve Message Event');
-    appDispatch({ ...InitialAppDataActionType, type: "RecievedMessage", messageResponse: messageResponse });
-    SendMessageRecievedAck(messageResponse, Data, token);
-
+    var res=await SendMessageRecievedAck(messageResponse, Data, token);
+    if(res)
+        {
+            appDispatch({ ...InitialAppDataActionType, type: "RecievedMessage", messageResponse: messageResponse,updateStatus:res });
+        }  
 };
 export const updateMessage = (messageResponse: IMessageResponse, appDispatch: React.Dispatch<AppDataActionType>) => {
     console.log('update Message Event');
