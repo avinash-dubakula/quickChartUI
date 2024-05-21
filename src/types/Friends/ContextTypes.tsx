@@ -1,3 +1,4 @@
+import { IFriendData } from "./EntityTypes";
 import { FriendRequestData } from "./EntityTypes"
 
 export interface IFriendshipData{
@@ -12,12 +13,6 @@ export interface IUserData{
    fullName:string;
     Email:string;
     UserName :string
-}
-export interface IFriendData{
-    fullName:string;
-    Email:string;
-    UserName :string
-    friendsFrom :Date
 }
 export interface IFriendshipProvider{
     Data:IFriendshipData,

@@ -12,12 +12,15 @@ import SpamBar from './components/pages/Spams/SpamBar/Index'
 import LoginOrSignUp from './components/pages/Authorize/Login/Index';
 import { AppDataContext } from './contexts/AppDataContextProvider'
 import { AuthContext } from './contexts/AuthContextProvider'
-import { InitalLoadChats } from './AppLogic'
+import { InitalLoadChats, InitalLoadFriendRequests } from './AppLogic'
 import { useSignalR } from './Hooks/UseSignalR/Index'
 import { InitialAppDataActionType } from './types/AppData/Context/Types'
 import { TimerComponent } from './components/molecules/Dummy'
 import PutDelieveredAck from './api/Chat/PutDelieveredAck'
 import { SignalRContext } from './contexts/SignalRContextProvider'
+import { FriendshipContext } from './contexts/FriendShipContextProvider'
+import FriendsBar from './components/pages/Friends/FriendsBar/Index'
+import AddFriend from './components/pages/Friends/AddFriend/Index'
 const AppRoutes = () => {
   console.log('App Route ')
   const {Data:AppData,dispatch:appDispatch}=useContext(AppDataContext);
@@ -26,11 +29,12 @@ const AppRoutes = () => {
   const {StartConnection,isStart}=useSignalR("https://localhost:7058/ChatHub");
   const [isDeliveryAckSent, setIsDeliveryAckSent] = useState(false);
   const [isSendingAck, setisSendingAck] = useState(false);
+  const {Data:friendData,dispatch:friendDispatch}=useContext(FriendshipContext);
   const LoadChats=async ()=>{
     
     if(AuthData !=null && AuthData.userAuthenticationData !=null && AuthData.userAuthenticationData.token)
       {       
-        if(AppData!= null && AppData.chats ==null)
+        if(AppData.chats ==null)
           {
             //inital dbFetch
             console.log('initial db fetch')
@@ -44,9 +48,22 @@ const AppRoutes = () => {
       
       
   }
+  const LoadFriendsAndRequests=async()=>{
+    if(AuthData !=null && AuthData.userAuthenticationData !=null && AuthData.userAuthenticationData.token)
+      {
+        var token=AuthData.userAuthenticationData.token;
+        if(friendData.friendRequests==null || friendData.friends==null)
+          {
+            console.log('initial friends & requests fetch')
+            var loadResult= await InitalLoadFriendRequests(token,friendDispatch)
+             console.log("-------------------",loadResult)
+          }
+      }
+  }
   useEffect(() => {
     console.log('App Route Effect')
     LoadChats();
+    LoadFriendsAndRequests();
   }, [AuthData?.userAuthenticationData?.token])
   useEffect(() => {
     if(AppData!=null && AppData.chats!=null && AppData.chats.dataFetchedTime!=null)
@@ -124,9 +141,8 @@ const AppRoutes = () => {
             <Route index element={<Blank />}></Route>
             <Route path='profile/:name' element={<ProfileCard></ProfileCard>}> </Route>
           </Route>
-          <Route path='Friends' element={<RequestBar/>}>
-            <Route index element={<Blank />}></Route>
-            <Route path='profile/:name' element={<ProfileCard></ProfileCard>}> </Route>
+          <Route path='Friends' element={<FriendsBar/>}>
+            <Route index element={<AddFriend />}></Route>
           </Route>
         </Route>
         <Route path='*' element={<>Page Not Found</>}></Route>

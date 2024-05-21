@@ -3,7 +3,7 @@ import '../Chat/Index.css'
 import { ReactComponent as CallIcon } from '../../../../assets/images/Chat/CallIcon.svg';
 import { ReactComponent as VideoCallIcon } from '../../../../assets/images/Chat/VideoCallIcon.svg';
 import { ReactComponent as NoProfileIcon } from '../../../../assets/images/Chat/NoProfileImage.svg';
-const AddFriend = () => {
+const AddUser = () => {
   const dummy={
     name:"Vijay Marisetti",
     profileurl:""
@@ -31,4 +31,4 @@ const AddFriend = () => {
   )
 }
 
-export default AddFriend
+export default AddUser

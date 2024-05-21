@@ -19,15 +19,18 @@ import AppDataContextProvider from './contexts/AppDataContextProvider';
 import ChatWrapper from './components/molecules/ChatWrapper/Index';
 import AppRoutes from './AppRoutes';
 import SignalRContextProvider from './contexts/SignalRContextProvider';
+import FriendShipContextProvider from './contexts/FriendShipContextProvider';
 function App() {
   return (
     <>
     <BrowserRouter>
     <AuthContextProvider>
       <AppDataContextProvider>
+        <FriendShipContextProvider>
         <SignalRContextProvider>
         <AppRoutes/>
         </SignalRContextProvider>   
+        </FriendShipContextProvider>
       </AppDataContextProvider>
       </AuthContextProvider>
     </BrowserRouter>

@@ -1,45 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Index.css'
 import { Outlet } from 'react-router-dom'
 import { FriendRequestData } from '../../../../types/Friends/EntityTypes';
+import { FriendshipContext } from '../../../../contexts/FriendShipContextProvider';
 
 const RequestBar = () => {
-  const friendRequests:FriendRequestData[] = [
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      profileUrl: "",
-      commonFriendsCount: 0
-    },
-    {
-      senderName: "Jane Smith",
-      senderUserName: "jane.smith",
-      friendUserId: "user456",
-      sentAt: new Date("2024-03-19T10:30:00"),
-      profileUrl: null,
-      commonFriendsCount: 0
-    },
-    {
-      senderName: "Alex Johnson",
-      senderUserName: "alex.johnson",
-      friendUserId: "user789",
-      sentAt: new Date("2024-03-18T14:15:00"),
-      profileUrl: "https://via.placeholder.com/150/FFFF00/000000?Text=AlexJohnson",
-      commonFriendsCount: 0
-    },
-    {
-      senderName: "John Doe",
-      senderUserName: "john.doe",
-      friendUserId: "user123",
-      sentAt: new Date("2024-03-20T08:45:00"),
-      profileUrl: "",
-      commonFriendsCount: 0
-    },
-    
-  ];
-  
+  const {Data:friendData,dispatch:friendDispatch}=useContext(FriendshipContext);
+  const friendRequests:FriendRequestData[] =friendData.friendRequests??[];
   return (
     <div className='d-flex w-100 h-100'>
     <div className='request-left-container'>

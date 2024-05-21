@@ -19,6 +19,14 @@ const FriendshipReducer = (oldState:IFriendshipData,action:IFriendshipActionType
                         return {...oldState,friends:friends}
                     }
                     return oldState
+            case 'SetFriendsAndRequests':
+              var friends=action.friends;
+              var requests=action.friendRequests;
+              if(friends!=null && requests!=null)
+                {
+                    return {...oldState,friends:friends,friendRequests:requests}
+                }
+                return oldState
             default:
                 return oldState
   
