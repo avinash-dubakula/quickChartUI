@@ -7,17 +7,23 @@ import { ReactComponent as LogoIcon } from '.././assets/images/AppLogo.svg';
 import { useNavigate } from 'react-router-dom';
 import { AppDataContext } from '../contexts/AppDataContextProvider';
 import { InitialAppDataActionType } from '../types/AppData/Context/Types';
+import { FriendshipContext } from '../contexts/FriendShipContextProvider';
+import { InitialFriendshipActionType } from '../types/Friends/ContextTypes';
+import { SignalRContext } from '../contexts/SignalRContextProvider';
+import { InitialSignalRActionType } from '../types/SignalR/ContextTypes';
 const Header = () => {
     const navigate=useNavigate();
     const {AuthData,dispatch} = useContext(AuthContext);
+    const {dispatch:friendShipDispatch}=useContext(FriendshipContext);
     const {dispatch:appDispatch}=useContext(AppDataContext);
+    const {dispatch:signalRDispatch}=useContext(SignalRContext);
     const UserName=AuthData?.userAuthenticationData?.userName;
-    console.log("username "+UserName)
-  // Dummy user profile data
 
   // Handle Logout
   const handleLogout = () => {
     dispatch({newState:null,type:"LOGOUT"})
+    friendShipDispatch({...InitialFriendshipActionType,type:"LOGOUT"})
+    signalRDispatch({...InitialSignalRActionType,type:"LOGOUT"})
     appDispatch({...InitialAppDataActionType,type:"LOGOUT"})
     // Implement logout logic here
   };

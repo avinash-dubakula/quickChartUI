@@ -7,6 +7,7 @@ import { IChat } from '../../../types/AppData/Message/Types';
 import { deleteChatHandler, closeChatHandler } from '../../pages/Chats/Chat/Logic';
 import { AppDataActionType } from '../../../types/AppData/Context/Types';
 import './Index.css'
+import { NavigateOptions, useNavigate } from 'react-router-dom';
 export interface IChatHeader{
     userChat: IChat | null,
     isMenuVisible: boolean,
@@ -14,7 +15,22 @@ export interface IChatHeader{
     appDispatch: React.Dispatch<AppDataActionType>,
     isActive:boolean
 }
+export interface CallState {
+  userName:string|null
+}
 const ChatHeader:React.FC<IChatHeader> = ({userChat,isMenuVisible,toggleMenuVisibility,appDispatch,isActive}) => {
+  const navigate=useNavigate();
+  var userName:string|null=null;
+  if(userChat)
+    {
+      userName=userChat.friendUserName;
+    }
+  const callHandler=()=>{
+    const options: NavigateOptions = {
+      state: { userName } as CallState,
+    };
+    navigate('/call', options);
+  }
   return (
     <div className='chat-header shadow '>
         <div className='left-box'>
@@ -28,7 +44,7 @@ const ChatHeader:React.FC<IChatHeader> = ({userChat,isMenuVisible,toggleMenuVisi
         <h3 className=''>{userChat?.friendName}</h3>
         </div>
         <div className='right-box'>
-          <CallIcon className='pt-2 pb-2'></CallIcon>
+          <CallIcon className='pt-2 pb-2' onClick={callHandler}></CallIcon>
           <VideoCallIcon className='pt-2 pb-2' style={{marginLeft:'10px'}}></VideoCallIcon>
           <MoreIcon className=' pt-3 pb-3' style={{marginLeft:'10px'}} onClick={toggleMenuVisibility}></MoreIcon>
 

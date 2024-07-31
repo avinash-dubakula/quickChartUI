@@ -6,13 +6,11 @@ import { AppDataContext } from '../../contexts/AppDataContextProvider';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { HubConnection } from '@microsoft/signalr';
 
-const UseSignalRSignals = (hubConnection: HubConnection | undefined, isStart: boolean) => {
+const UseSignalRSignalsForMessages = (hubConnection: HubConnection | undefined, isStart: boolean) => {
     const {Data:appData,dispatch:appDispatch}=useContext(AppDataContext);
     const {AuthData:authData}=useContext(AuthContext)
     useEffect(() => { 
         if (hubConnection && isStart && appData) { 
-            var token=GetAccessToken(authData.userAuthenticationData);
-            subscribeToNewMessage(hubConnection,appDispatch,appData,token); 
             subscribeToMessageUpdate(hubConnection,appDispatch);
             subscribeToMessagesUpdate(hubConnection,appDispatch);         
         } 
@@ -20,14 +18,27 @@ const UseSignalRSignals = (hubConnection: HubConnection | undefined, isStart: bo
         return () => { 
           if (hubConnection && isStart && appData) { 
             // Remove the 'ReceiveMessage' event listener when the component unmounts 
-            hubConnection.off('RecieveMessage'); 
             hubConnection.off('MessageUpdated');
             hubConnection.off('MessagesUpdated');          
             console.log('Listener removed'); 
           } 
         }; 
-      }, [hubConnection,appData.activeChatUserName,isStart,appData]); 
+      }, [hubConnection,isStart]); 
+      useEffect(() => { 
+        if (hubConnection && isStart && appData) { 
+            var token=GetAccessToken(authData.userAuthenticationData);
+            subscribeToNewMessage(hubConnection,appDispatch,appData,token); 
+        } 
+        // Cleanup function that will be called when the component unmounts
+        return () => { 
+          if (hubConnection && isStart && appData) { 
+            // Remove the 'ReceiveMessage' event listener when the component unmounts 
+            hubConnection.off('RecieveMessage');        
+            console.log('Listener removed'); 
+          } 
+        }; 
+      }, [hubConnection,appData.activeChatUserName,isStart]); 
       // Make sure the effect runs again if hubConnection changes 
 }
 
-export default UseSignalRSignals
+export default UseSignalRSignalsForMessages

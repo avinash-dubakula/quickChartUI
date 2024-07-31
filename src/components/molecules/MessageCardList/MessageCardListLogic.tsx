@@ -11,7 +11,6 @@ export const handleChatClick=(friendUserName:string,dispatch: (value: AppDataAct
     }
   }
 export const getInitials = (name: string) => {
-  console.log('name ', name);
   const parts = name.trim().split(' ');
   if (parts.length === 1) {
     return parts[0][0];

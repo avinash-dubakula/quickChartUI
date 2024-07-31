@@ -4,7 +4,7 @@ const PostFriendRequest  =  async<T,>(bearerToken: string,receiverUserName:strin
     {
         const response = await fetch(`api/FriendShip/Send/${receiverUserName}`, 
         {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",

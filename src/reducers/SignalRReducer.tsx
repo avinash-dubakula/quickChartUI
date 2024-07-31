@@ -1,4 +1,4 @@
-import { ISignalRData, SignalRActionType } from "../types/SignalR/ContextTypes";
+import { ISignalRData, InitialSignalRData, SignalRActionType } from "../types/SignalR/ContextTypes";
 import { UserConnectedAction, UserDisConnectedAction } from "./SignalRReducerLogic";
 
 const SignalRReducer = (oldState:ISignalRData,action:SignalRActionType):ISignalRData => {
@@ -28,6 +28,8 @@ const SignalRReducer = (oldState:ISignalRData,action:SignalRActionType):ISignalR
                         return result;
                     }
                 return oldState
+            case 'LOGOUT':
+                return InitialSignalRData
             default:
                 return oldState
   

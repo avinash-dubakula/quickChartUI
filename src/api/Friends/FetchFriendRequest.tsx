@@ -1,4 +1,4 @@
-const FetchFriendRequests  =  async<T,>(bearerToken: string):Promise<T[]|null> => {
+const FetchFriendRequests  =  async<T,>(bearerToken: string):Promise<T|null> => {
     
     try 
     {
@@ -18,7 +18,7 @@ const FetchFriendRequests  =  async<T,>(bearerToken: string):Promise<T[]|null> =
         {
             console.log('Successfully loaded the friends details')
             
-            const data:T[] = await response.json() as T[]; // Make sure to await the parsing of the JSON
+            const data:T = await response.json() as T // Make sure to await the parsing of the JSON
             console.log('data',data)
             return data;
         } 

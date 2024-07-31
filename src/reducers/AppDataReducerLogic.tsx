@@ -4,7 +4,6 @@ import { IMessageResponse, IMessageBatch, IMessagesUpdateModel, MessageStatus } 
 export const SentMessageAction = (messageResponse: IMessageResponse, oldState: IAppData):IAppData => {
   if (oldState.chats != null && oldState.chats.chatData != null) {
     var currentChatindex = oldState.chats.chatData.findIndex(item => item.chat.friendUserName == messageResponse.friendUserName);
-    console.log('chat found', currentChatindex);
     if (currentChatindex != -1) {
       var currentChat = { ...oldState.chats.chatData[currentChatindex] };
       // currentChat.chat.lastMessageDate = messageResponse.message.actionAt;
@@ -24,7 +23,6 @@ export const SentMessageAction = (messageResponse: IMessageResponse, oldState: I
       }
       var newState = { ...oldState };
       if (newState.chats != null && newState.chats.chatData != null) {
-        console.log('new State');
         currentChat.chat.lastMessageDate = messageResponse.message.actionAt;
         currentChat.chat.lastMessage = messageResponse.message.message;
         newState.chats.chatData[currentChatindex] = currentChat;
@@ -39,7 +37,6 @@ export const SentMessageAction = (messageResponse: IMessageResponse, oldState: I
 export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState: IAppData,updateStatus: MessageStatus):IAppData => {
   if (oldState.chats != null && oldState.chats.chatData != null) {
     var currentChatindex = oldState.chats.chatData.findIndex(item => item.chat.friendUserName == messageResponse.friendUserName);
-    console.log('chat found', currentChatindex);
     if (currentChatindex != -1) {
       var currentChat = { ...oldState.chats.chatData[currentChatindex] };
       currentChat.newMessageIds=[...currentChat.newMessageIds,messageResponse.message.id]
@@ -58,12 +55,10 @@ export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState
       }
       var newState = { ...oldState };
       if (newState.chats != null && newState.chats.chatData != null) {
-        console.log('new State');
         currentChat.chat.lastMessage=messageResponse.message.message;
         currentChat.chat.lastMessageDate=messageResponse.message.actionAt;
         if(updateStatus==MessageStatus.Seen)
           {
-            console.error('update Status'+updateStatus);
             currentChat.seenTillMessageId=Math.max(currentChat.seenTillMessageId??-1,messageResponse.message.id);
           }
         else{
@@ -86,17 +81,14 @@ export const RecieveMessageAction = (messageResponse: IMessageResponse, oldState
 export const RecieveMessageUpdateAction = (messageResponse: IMessageResponse, oldState: IAppData):IAppData => {
   if (oldState.chats != null && oldState.chats.chatData != null) {
     var currentChatindex = oldState.chats.chatData.findIndex(item => item.chat.friendUserName == messageResponse.friendUserName);
-    console.log('chat found', currentChatindex);
     if (currentChatindex != -1) {
       var currentChat = { ...oldState.chats.chatData[currentChatindex] };
       var currentMessageBatchIndex = currentChat.messageBatches.findIndex(item => item.batchDate == messageResponse.batchDate);
-      console.log('currentMessageBatchIndex',currentMessageBatchIndex,messageResponse)
       if (currentMessageBatchIndex != -1) {
         //belong to a existing branch
         var messageIndex=currentChat.messageBatches[currentMessageBatchIndex].messages.findIndex(msg=>msg.id==messageResponse.message.id)
         if(messageIndex!=-1)
           {
-            console.log('Message Delivered')
             currentChat.messageBatches[currentMessageBatchIndex].messages[messageIndex]=messageResponse.message;
           }
           else{
@@ -105,7 +97,6 @@ export const RecieveMessageUpdateAction = (messageResponse: IMessageResponse, ol
       }
       var newState = { ...oldState };
       if (newState.chats != null && newState.chats.chatData != null) {
-        console.log('new State');
         newState.chats.chatData[currentChatindex] = currentChat;
         return newState;
       }
@@ -152,7 +143,6 @@ export const MessagesUpdateAction = (messageModal: IMessagesUpdateModel, oldStat
           var newState={...oldState};
           if(isUpdateRequired && newState.chats!=null)
             {  
-              console.warn('Updating chats',messageModal);
               newState.chats.chatData[chatIndexTobeUpdated]=chatTobeUpdated;
               return newState;
             }

@@ -1,6 +1,5 @@
-.chat-heading
+.friends-heading
 {
-    background-color: rgba(8, 8, 8, 0.897);
     color: whitesmoke;
     font-weight: 200;
     font-size:24px;
@@ -8,14 +7,15 @@
     height: 66px;
     padding-left: 20px;
     padding-top: 10px;
+    background-color: black;
 }
-.chat-left-container{
+.friends-left-container{
     width: 30%;
     border-right: 1px solid rgba(27, 26, 26, 0.993);
     border-left: 1px solid rgba(27, 26, 26, 0.993);
     height: 100%;
 }
-.chat-right-container{
+.friends-right-container{
     width:70%;
     height: 100%;
 }

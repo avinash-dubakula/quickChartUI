@@ -11,7 +11,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const SideBar = () => {
   const location = useLocation();
   const navigate=useNavigate()
-  console.log(location.pathname); 
   var pathData=location.pathname.split('/');
   const activeIcon=(pathData[1].length>0)?pathData[1]:'chats'
   const icons = [

@@ -4,7 +4,6 @@ import { DeliveryStatusSentAction, MessagesUpdateAction, RecieveMessageAction, R
 import { IsValueEquals } from '../contexts/AppDataLogic';
 
 const AppDataReducer = (oldState:IAppData,action:AppDataActionType):IAppData => {
-  console.log('App Data Reducer',action.type)
   if(action.type!=null)
   {
     switch(action.type)

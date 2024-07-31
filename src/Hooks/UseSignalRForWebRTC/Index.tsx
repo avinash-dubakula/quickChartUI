@@ -3,32 +3,29 @@ import { HubConnection } from '@microsoft/signalr';
 import { GetActiveChatUserName, GetFriendUserNames } from '../../contexts/AppDataLogic';
 import { AuthContext } from '../../contexts/AuthContextProvider';
 import { AppDataContext } from '../../contexts/AppDataContextProvider';
-import UseOnlineTracker from '../UseOnlineTracker/Index';
-import { ISignalR } from '../../types/SignalR/EntityTypes';
+import { ISignalRForWebRTC } from '../../types/SignalR/EntityTypes';
 import { GetAccessToken } from '../../contexts/SignalRLogic';
-import { CreateConnection, startConnection } from './Logic';
-import UseSignalRSignalsForMessages from '../UseSignalRSignalsForMessages/Index';
-import { createConnection } from 'net';
+import { startWebRTCConnection } from './Logic'
+import { CreateConnection, startConnection } from '../UseSignalR/Logic';
 import UseSignalRSignalsForFR from '../UseSignalRSignalsForFR/Index';
-export const useSignalR = (hubUrl: string): ISignalR => {
+
+export const UseSignalRForWebRTC = (hubUrl: string): ISignalRForWebRTC => {
     const {Data,dispatch:appDispatch}=useContext(AppDataContext);
     const {AuthData}=useContext(AuthContext);
     const [hubConnection, setHubConnection] = useState<HubConnection>();
-    const [isStart, setisStart] = useState(false)
     const [isAcknowledgementSent,setisAcknowledgementSent]=useState(false);
-    const StartSignalR=()=>{
-       setisStart(true)
-    }
-    UseOnlineTracker(hubConnection,isStart,isAcknowledgementSent);
-    UseSignalRSignalsForMessages(hubConnection,isStart);
+    const [isStart, setisStart] = useState(false)
     UseSignalRSignalsForFR(hubConnection,isStart);
+    const StartSignalRForWebRTC=()=>{
+        setisStart(true)
+     }
     useEffect(() => {
-        console.log('signal r use Effect')        
-        if(GetAccessToken(AuthData.userAuthenticationData)!=undefined && GetAccessToken(AuthData.userAuthenticationData).length>0  && isStart)
+        console.log('signal r For WebRTC use Effect')        
+        if(GetAccessToken(AuthData.userAuthenticationData)!=null && GetAccessToken(AuthData.userAuthenticationData).length>0 && isStart)
         {        
             var connection= CreateConnection(hubUrl);
             setHubConnection(connection);
-            startConnection(connection,setisAcknowledgementSent,AuthData);
+            startWebRTCConnection(connection,setisAcknowledgementSent,AuthData);
             return () => {
             
                 connection?.stop().then(() => console.log('Connection stopped'));
@@ -38,9 +35,9 @@ export const useSignalR = (hubUrl: string): ISignalR => {
     }
     }, [hubUrl,AuthData,isStart]);
     if(Data!=null)
-    console.log('Signal R',GetActiveChatUserName(Data));
+    console.log('Signal R For WebRTC',GetActiveChatUserName(Data));
     
     
 
-    return {hubConnection,StartConnection: StartSignalR,isStart};
+    return {hubConnection,isAcknowledgementSent,isCallHubStart:isStart,StartCallHubConnection:StartSignalRForWebRTC};
 };

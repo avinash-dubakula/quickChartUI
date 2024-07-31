@@ -26,6 +26,7 @@ export const InitalLoadChats =async (bearerToken: string,isSpam:boolean,minimumM
 export const InitalLoadFriendRequests =async (bearerToken: string,dispatch:React.Dispatch<IFriendshipActionType>):Promise<boolean> => {
   var friends=await FetchFriends<IFriendData>(bearerToken);
   var requests=await FetchFriendRequests<FriendRequestData>(bearerToken);
+  
   if(friends!=null && requests!=null)
     {    
       dispatch({...InitialFriendshipActionType,type:"SetFriendsAndRequests",friendRequests:requests,friends:friends})

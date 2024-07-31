@@ -18,7 +18,6 @@ const FriendShipContextProvider = (props:any) => {
     return InitialFriendshipData;
     });
   useEffect(() => {
-    console.log('********* setting session *****************')
     sessionStorage.setItem('UserFriendShipData',JSON.stringify(friendShipData));    
   }, [friendShipData])
   

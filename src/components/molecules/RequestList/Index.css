@@ -1,0 +1,31 @@
+.requests-container{
+    height: 90%;
+    overflow-y: auto;
+  }
+  .requests-container::-webkit-scrollbar {
+    width: 4px; /* Make scrollbar thinner */
+     /* For horizontal scroll */
+  }
+  
+  /* Handle */
+  .requests-container::-webkit-scrollbar-thumb {
+    background: #8888887c; 
+    border-radius: 4px;
+  }
+  
+  /* Handle on hover */
+  .requests-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  
+  /* Scrollbar track */
+  .requests-container::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 4px;
+  }
+  .requester-name-display{
+    font-weight: 400;
+    font-size: 22px;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }

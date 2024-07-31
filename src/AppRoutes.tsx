@@ -21,12 +21,15 @@ import { SignalRContext } from './contexts/SignalRContextProvider'
 import { FriendshipContext } from './contexts/FriendShipContextProvider'
 import FriendsBar from './components/pages/Friends/FriendsBar/Index'
 import AddFriend from './components/pages/Friends/AddFriend/Index'
+import Call from './components/pages/Call/Index'
+import { UseSignalRForWebRTC } from './Hooks/UseSignalRForWebRTC/Index'
 const AppRoutes = () => {
   console.log('App Route ')
   const {Data:AppData,dispatch:appDispatch}=useContext(AppDataContext);
   const {AuthData}=useContext(AuthContext);
   const {dispatch:signalRDispatch}=useContext(SignalRContext);
   const {StartConnection,isStart}=useSignalR("https://localhost:7058/ChatHub");
+  const {hubConnection,isAcknowledgementSent,isCallHubStart,StartCallHubConnection}=UseSignalRForWebRTC("https://localhost:7058/CallHub");
   const [isDeliveryAckSent, setIsDeliveryAckSent] = useState(false);
   const [isSendingAck, setisSendingAck] = useState(false);
   const {Data:friendData,dispatch:friendDispatch}=useContext(FriendshipContext);
@@ -54,9 +57,8 @@ const AppRoutes = () => {
         var token=AuthData.userAuthenticationData.token;
         if(friendData.friendRequests==null || friendData.friends==null)
           {
-            console.log('initial friends & requests fetch')
             var loadResult= await InitalLoadFriendRequests(token,friendDispatch)
-             console.log("-------------------",loadResult)
+          
           }
       }
   }
@@ -109,23 +111,23 @@ const AppRoutes = () => {
       }  
   }, [AppData?.chats?.dataFetchedTime,setIsDeliveryAckSent])
   
-  useEffect(()=>{
-    if(AppData?.chats?.chatData!=null && AppData?.chats?.chatData!=undefined)
-      {
-       
+  useEffect(()=>{  
         if(!isStart)
           { 
-            console.log('trying to start connection')
+            console.log('trying to start signalr chat connection')
             StartConnection();
           }
-          
-     
-      }
-  },[AppData?.chats?.chatData,])
+        if(!isCallHubStart)
+          {
+            console.log('trying to start signalr webrtc connection')
+            StartCallHubConnection();
+          }    
+  },[AuthData.userAuthenticationData?.token])
   return (
     <Routes>
         <Route path='/Login' element={<LoginOrSignUp action='Login'/>} />
         <Route path='/SignUp' element={<LoginOrSignUp action='SignUp'/>} />
+        <Route path='/call' element={<Call></Call>}></Route>
         <Route path='/' element={<Home></Home>}>
         <Route path='/' element={<ChatBar/>}>
             <Route index element={<ChatWrapper  />}></Route>

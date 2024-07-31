@@ -44,7 +44,8 @@ export const SendMessageRecievedAck = async (messageResponse: IMessageResponse, 
         }
     }
     return null
-};export const CreateConnection = (hubUrl: string): HubConnection => {
+};
+export const CreateConnection = (hubUrl: string): HubConnection => {
     const connection = new HubConnectionBuilder()
         .withUrl(hubUrl)
         .withAutomaticReconnect(new CustomRetryPolicy())

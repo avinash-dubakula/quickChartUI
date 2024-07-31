@@ -1,19 +1,35 @@
 .request-heading
 {
-    background-color: rgba(8, 8, 8, 0.897);
-    color: whitesmoke;
-    font-weight: 200;
-    font-size:22px;
+  background-color: rgba(8, 8, 8, 0.897);
+  color: whitesmoke;  
+  padding-left: 20px;
+  padding-top: 10px;
+  display: flex;
+  padding-right: 20px; 
+  height: 66px;
+  justify-content: space-between;
+}
+.request-heading h4{
+  font-weight: 200;
+    font-size:24px;
     line-height: 50px;
-    height: 10%;
-    padding-left: 20px;
-    padding-top: 10px;
+}
+.request-direction{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.request-direction:focus {
+  outline: none;
+  box-shadow: none;
 }
 .request-left-container{
     width: 30%;
     border-right: 1px solid rgba(27, 26, 26, 0.993);
     border-left: 1px solid rgba(27, 26, 26, 0.993);
-    height: 100%;
+    height: 90%;
 }
 .request-right-container{
     width:70%;
@@ -30,29 +46,8 @@
     font-weight: bold;
     background-color: #ccc; /* For initials background */
   }
-  .requests-container{
-    height: 90%;
-    overflow-y: auto;
-  }
-  .requests-container::-webkit-scrollbar {
-    width: 4px; /* Make scrollbar thinner */
-     /* For horizontal scroll */
-  }
   
-  /* Handle */
-  .requests-container::-webkit-scrollbar-thumb {
-    background: #8888887c; 
-    border-radius: 4px;
-  }
-  
-  /* Handle on hover */
-  .requests-container::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-  
-  /* Scrollbar track */
-  .requests-container::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    border-radius: 4px;
+  .request-active{
+    background-color: rgba(36, 136, 218, 0.918);
   }
   

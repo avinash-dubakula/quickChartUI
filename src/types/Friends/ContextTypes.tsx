@@ -1,18 +1,13 @@
-import { IFriendData } from "./EntityTypes";
+import { IFriendData, INewFriendRequest } from "./EntityTypes";
 import { FriendRequestData } from "./EntityTypes"
 
 export interface IFriendshipData{
-    friendRequests:FriendRequestData[]|null
+    friendRequests:FriendRequestData|null
     friends:IFriendData[]|null
 }
 export const InitialFriendshipData:IFriendshipData={
     friendRequests: null,
     friends: null
-}
-export interface IUserData{
-   fullName:string;
-    Email:string;
-    UserName :string
 }
 export interface IFriendshipProvider{
     Data:IFriendshipData,
@@ -21,10 +16,12 @@ export interface IFriendshipProvider{
 export interface IFriendshipActionType{
     type:string
     friends:IFriendData[]|null
-    friendRequests:FriendRequestData[]|null
+    friendRequests:FriendRequestData|null
+    newrequest:INewFriendRequest|null
 }
 export const InitialFriendshipActionType:IFriendshipActionType={
     type: "",
     friends: null,
-    friendRequests: null
+    friendRequests: null,
+    newrequest:null
 }
