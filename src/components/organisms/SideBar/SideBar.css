@@ -3,34 +3,48 @@
     flex-direction: column; /* Stack icon and label vertically */
     align-items: center; /* Center align items */
     cursor: pointer;
-    padding: 0px 0px 5px 0px ;/* Adjust padding as needed */
-  }
-  
-  .icon-container .icon-label {
+    padding: 0px 0px 5px 0px; /* Adjust padding as needed */
+    /* box-sizing: border-box; */
+}
+
+.icon-container .icon-label {
     visibility: hidden; /* Hide label by default using visibility */
     opacity: 0; /* Make label fully transparent */
     text-align: center; /* Ensure label is centered below icon */
     margin-top: -17px; /* Space between icon and label */
     height: 14px;
     transition: visibility 0s, opacity 0.5s linear; /* Smooth transition for opacity and visibility */
-  }
-  
-  .icon-container:hover .icon-label {
+}
+
+.icon-container:hover .icon-label {
     color: white;
     font-size: 11px;
     overflow-x: visible;
     visibility: visible; /* Make label visible on hover */
     opacity: 1; /* Fully opaque to make it visible */
-  }
-  .active-icon-label {
+}
+.active-icon-label {
     color: white;
     font-size: 11px;
     overflow-x: visible;
     visibility: visible !important; /* Make label visible on hover */
     opacity: 1 !important; /* Fully opaque to make it visible */
-  }
-  .active {
-    
-    background-color: rgba(9, 10, 10, 0.774); /* Highlight styling for the active icon */
-  }
-  
+}
+.active {
+    background-color: rgba(
+        9,
+        10,
+        10,
+        0.774
+    ); /* Highlight styling for the active icon */
+}
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    .icon-group {
+        display: flex;
+    }
+    .icon-container {
+        box-sizing: border-box;
+        width: 100%;
+    }
+}

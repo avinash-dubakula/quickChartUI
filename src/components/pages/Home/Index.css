@@ -1,12 +1,12 @@
-.home{
+.home {
     height: 100vh;
 }
-.home-outlet{
+.home-outlet {
     height: 90vh;
     background-color: bisque;
 }
-.left-part{
-    width: 5vw;
+.left-part {
+    width: 75px;
     height: 90vh;
 }
 /* .middle-part{
@@ -14,11 +14,28 @@
     background-color: rgb(240, 238, 238);
     height: 90vh;
 } */
-.right-part{
-    width:95vw;
+.right-part {
+    width: 95vw;
     background-color: rgb(243, 240, 240);
-    height:90vh;
-}
-.main-box{
     height: 90vh;
+}
+.main-box {
+    height: 90vh;
+    display: flex;
+}
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    .main-box {
+        flex-direction: column-reverse;
+    }
+}
+@media only screen and (max-width: 500px) {
+    /* For mobile phones: */
+    .left-part {
+        height: 80px;
+        width: 100%;
+    }
+    .right-part {
+        width: 100vw;
+    }
 }
